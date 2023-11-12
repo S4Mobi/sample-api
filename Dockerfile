@@ -1,10 +1,25 @@
 FROM openjdk:11-jdk-slim
-ARG JAR_FILE=target/*.jar
-ENV SERVER_PORT=${SERVER_PORT:-8080} \
+
+ENV JVM_OPTS=${JVM_OPTS:-'-Xmx256m -Xms128m'} \
+    SERVER_PORT=${SERVER_PORT:-8080} \
     SERVER_SERVELT_CONTEXT_PATH=${SERVER_SERVELT_CONTEXT_PATH:-'/v1/sample'} \
-    PARSE_APPLICATION_ID=${PARSE_APPLICATION_ID:-8090} \
-    PARSE_RESTIAPI_KEY=${PARSE_RESTIAPI_KEY:-8090} \
-	TZ=America/Sao_Paulo
-COPY ${JAR_FILE} app.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+    PARSE_APPLICATION_ID=${PARSE_APPLICATION_ID} \
+    PARSE_RESTIAPI_KEY=${PARSE_RESTIAPI_KEY} \
+    TZ=America/Sao_Paulo
+
+ADD ./target/sample-api.jar /app/
+
+USER root
+RUN echo ${TZ} > /etc/timezone &&\
+    adduser -m sample &&\
+    chown -R sample /app &&\
+    chmod u+x /app/sample-api.jar &&\
+    export ENCRYPT_KEY=IMSYMMETRIC
+
+USER sample
+
+EXPOSE ${SERVER_PORT}
+
+WORKDIR /app
+
+CMD [ "sh", "-c", "java ${JVM_OPTS} -Dlog4j2.formatMsgNoLookups=true -jar /app/sample-api.jar --spring.config.location=file:///app/application-docker.yml"]
