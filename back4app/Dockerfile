@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk-slim
+FROM ghcr.io/robixnai/sample-api:main
 
 ENV JVM_OPTS=${JVM_OPTS:-'-Xmx256m -Xms128m'}
 ENV SERVER_PORT=${SERVER_PORT:-8080}
@@ -7,10 +7,6 @@ ENV PARSE_APPLICATION_ID=${PARSE_APPLICATION_ID}
 ENV PARSE_RESTIAPI_KEY=${PARSE_RESTIAPI_KEY}
 ENV TZ=America/Sao_Paulo
 
-WORKDIR /app
+EXPOSE ${SERVER_PORT}
 
-ARG APPLICATION=./application-docker.yml
-ARG JAR_FILE=target/*.jar
-
-COPY ${APPLICATION} ./application-docker.yml
-COPY ${JAR_FILE} ./app.jar
+CMD [ "sh", "-c", "java ${JVM_OPTS} -Dlog4j2.formatMsgNoLookups=true -jar /app/app.jar --spring.config.location=file:/app/application-docker.yml"]
