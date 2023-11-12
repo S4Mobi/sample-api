@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk-slim
+FROM openjdk:11 as build
 
 ENV JVM_OPTS=${JVM_OPTS:-'-Xmx256m -Xms128m'} \
     SERVER_PORT=${SERVER_PORT:-8080} \
