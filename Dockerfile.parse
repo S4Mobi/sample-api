@@ -1,4 +1,0 @@
-FROM ghcr.io/robixnai/sample-api:main
-ENV SERVER_PORT=${SERVER_PORT:-8080}
-EXPOSE ${SERVER_PORT}
-CMD [ "sh", "-c", "java ${JVM_OPTS} -Dlog4j2.formatMsgNoLookups=true -jar /app/app.jar --spring.config.location=file:/app/application-docker.yml"]
