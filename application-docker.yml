@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: sample-api
+  profiles:
+    active: docker
+
+server:
+  port: ${SERVER_PORT}
+  servlet:
+    context-path: ${SERVER_SERVELT_CONTEXT_PATH}
+
+parse:
+  application:
+    id: {PARSE_APPLICATION_ID}
+  resti-api:
+    key: {PARSE_RESTIAPI_KEY}

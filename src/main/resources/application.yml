@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: sample-api
+  profiles:
+    active: default
+
+server:
+  port: 8080
+  servlet:
+    context-path: '/v1/sample'
+
+parse:
+  application:
+    id: {PARSE_APPLICATION_ID}
+  resti-api:
+    key: {PARSE_RESTIAPI_KEY}
