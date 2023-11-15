@@ -1,4 +1,5 @@
 name: Update Project Version
+
 on:
   release:
     types: [created]
