@@ -1,17 +1,15 @@
 name: Sample CI
 
 on:
-#  schedule:
-#    - cron: '25 15 * * *'
+  schedule:
+    - cron: '25 15 * * *'
 #  push:
 #    branches: [ "main" ]
   pull_request:
-    types:
-      - opened
+    types: [opened, ready_for_review]
     branches:
-      - 'main'
-      - 'develop'
-#    branches: [ "main", "develop" ]
+      - main
+      - develop
 
 env:
   REGISTRY: ghcr.io
