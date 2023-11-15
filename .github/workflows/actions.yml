@@ -38,15 +38,11 @@ jobs:
 
       - name: Get project version
         uses: ./
-        id: getVersion
+        id: project-version
 
       # Remover após sucesso
       - name: Show version POM
-        run: echo "The version we just got from the pom is ${{ steps.getProjectVersion.outputs.version }}"
-
-      # Remover após sucesso
-      - name: Show version old tag
-        run: echo "The tag version we use is ${{ steps.meta.outputs.tags }}"
+        run: echo "The version we just got from the pom is ${{ steps.project-version.outputs.version }}"
 
       - name: Install cosign
         if: github.event_name != 'pull_request'
@@ -71,6 +67,10 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      # Remover após sucesso
+      - name: Show version old tag
+        run: echo "The tag version we use is ${{ steps.meta.outputs.tags }}"
+
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
@@ -78,8 +78,8 @@ jobs:
           context: .
 #          push: ${{ github.event_name != 'pull_request' }}
           push: ${{ github.event_name == 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-#          tags: ${{ steps.getProjectoVersion.outputs.version }}
+#          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.project-version.outputs.version }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -88,7 +88,7 @@ jobs:
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          TAGS: ${{ steps.meta.outputs.tags }}
-#          TAGS: ${{ steps.getProjectoVersion.outputs.version }}
+#          TAGS: ${{ steps.meta.outputs.tags }}
+          TAGS: ${{ steps.getProjectoVersion.outputs.version }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
