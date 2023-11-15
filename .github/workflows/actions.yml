@@ -6,7 +6,7 @@ on:
 #  push:
 #    branches: [ "main" ]
   pull_request:
-    types: [opened, ready_for_review]
+    types: [opened, synchronize, reopened, edited]
     branches:
       - main
       - develop
@@ -68,8 +68,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       # Remover após sucesso
-      - name: Show version old tag
-        run: echo "The tag version we use is ${{ steps.meta.outputs.tags }}"
+      - name: Show version extract docker metadata
+        run: echo "The version we just got from the docker metadata is ${{ steps.meta.outputs.tags }}"
 
       - name: Build and push Docker image
         id: build-and-push
