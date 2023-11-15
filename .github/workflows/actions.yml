@@ -1,17 +1,17 @@
 name: Sample CI
 
 on:
-#  schedule:
-#    - cron: '25 15 * * *'
+  schedule:
+    - cron: '25 15 * * *'
 #  push:
 #    branches: [ "main" ]
   pull_request:
     types:
       - opened
-#    branches:
-#      - 'releases/**'
-#      - 'bugfix/**'
-#      - 'hotfix/**'
+    branches:
+      - 'releases/**'
+      - 'bugfix/**'
+      - 'hotfix/**'
 #    branches: [ "release", "bugfix", "hotfix" ]
 
 env:
