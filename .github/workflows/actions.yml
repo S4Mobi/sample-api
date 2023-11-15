@@ -36,17 +36,17 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-      - name: Get projecto version
+      - name: Get project version
         uses: ./
         id: getVersion
 
       # Remover após sucesso
       - name: Show version POM
-        run: echo "The version we just got from the pom is ${{ steps.getProjectoVersion.outputs.version }}"
+        run: echo "The version we just got from the pom is ${{ steps.getProjectVersion.outputs.version }}"
 
       # Remover após sucesso
       - name: Show version old tag
-          run: echo "The tag version we use is ${{ steps.meta.outputs.tags }}"
+        run: echo "The tag version we use is ${{ steps.meta.outputs.tags }}"
 
       - name: Install cosign
         if: github.event_name != 'pull_request'
