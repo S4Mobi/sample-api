@@ -27,7 +27,7 @@ public class SampleController extends BaseEndpoint {
     @Autowired
     private SampleService sampleService;
 
-    @CrossOrigin(origins = "http://localhost:8080")
+//    @CrossOrigin
     @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get All Sample List.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
@@ -39,7 +39,7 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok(entities.stream().map(SampleResponse::fromEntity).collect(Collectors.toList()));
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+//    @CrossOrigin
     @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get One Sample by Id.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
@@ -51,7 +51,7 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok(SampleResponse.fromEntity(entity));
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+//    @CrossOrigin
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Post One Sample.", responses = {
             @ApiResponse(responseCode = "201", description = "Created"),
@@ -63,7 +63,7 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.created(this.createUri(entity.getId())).build();
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+//    @CrossOrigin
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Change all Sample by Id.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
@@ -75,7 +75,7 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok().build();
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+//    @CrossOrigin
     @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Remove on Sample by Id.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
