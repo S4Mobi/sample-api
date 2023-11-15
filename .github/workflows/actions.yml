@@ -36,16 +36,6 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-      - name: Get project version
-        run: |
-          RELEASE_VERSION=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
-          echo "::set-output name=version::$RELEASE_VERSION"
-        id: project-version
-
-      # Remover após sucesso
-      - name: Show version POM
-        run: echo "The version we just got from the pom is ${{ env.RELEASE_VERSION }}"
-
       - name: Install cosign
         if: github.event_name != 'pull_request'
         uses: sigstore/cosign-installer@6e04d228eb30da1757ee4e1dd75a0ec73a653e06 #v3.1.1
@@ -69,10 +59,6 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      # Remover após sucesso
-      - name: Show version extract docker metadata
-        run: echo "The version we just got from the docker metadata is ${{ steps.meta.outputs.tags }}"
-
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
@@ -80,17 +66,15 @@ jobs:
           context: .
 #          push: ${{ github.event_name != 'pull_request' }}
           push: ${{ github.event_name == 'pull_request' }}
-#          tags: ${{ steps.meta.outputs.tags }}
-          tags: ${{ steps.project-version.outputs.version }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Sample API image
 
       - name: Sign the published Docker image
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request' }}
         env:
-#          TAGS: ${{ steps.meta.outputs.tags }}
-          TAGS: ${{ steps.getProjectoVersion.outputs.version }}
+          TAGS: ${{ steps.meta.outputs.tags }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
