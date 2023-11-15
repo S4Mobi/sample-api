@@ -1,8 +1,8 @@
 name: Sample CI
 
 on:
-  schedule:
-    - cron: '25 15 * * *'
+#  schedule:
+#    - cron: '25 15 * * *'
 #  push:
 #    branches: [ "main" ]
   pull_request:
@@ -36,6 +36,18 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
+      - name: Get project version
+        uses: ./
+        id: getVersion
+
+      # Remover após sucesso
+      - name: Show version POM
+        run: echo "The version we just got from the pom is ${{ steps.getProjectVersion.outputs.version }}"
+
+      # Remover após sucesso
+      - name: Show version old tag
+        run: echo "The tag version we use is ${{ steps.meta.outputs.tags }}"
+
       - name: Install cosign
         if: github.event_name != 'pull_request'
         uses: sigstore/cosign-installer@6e04d228eb30da1757ee4e1dd75a0ec73a653e06 #v3.1.1
@@ -64,8 +76,10 @@ jobs:
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+#          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ github.event_name == 'pull_request' }}
+#          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.getProjectoVersion.outputs.version }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -74,6 +88,7 @@ jobs:
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          TAGS: ${{ steps.meta.outputs.tags }}
+#          TAGS: ${{ steps.meta.outputs.tags }}
+          TAGS: ${{ steps.getProjectoVersion.outputs.version }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
