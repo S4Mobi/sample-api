@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(maxAge = 3600)
+//@CrossOrigin(maxAge = 3600)
 @RestController
 @Tag(name = "Sample")
 @RequestMapping("/samples")
