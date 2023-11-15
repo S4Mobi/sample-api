@@ -1,12 +1,11 @@
 name: Update Project Version
 
 on:
-  release:
-    types: [created]
+  push:
+    branches: [ "release/**" ]
 
 jobs:
-
-  publish:
+  build:
 
     runs-on: ubuntu-latest
 
@@ -22,12 +21,3 @@ jobs:
       - if: github.event.release
         name: Update version in pom.xml (Release only)
         run: mvn -B versions:set -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
-
-      - name: Release Maven package
-        uses: samuelmeuli/action-maven-publish@v1.4.0
-        with:
-          maven_profiles: deploy, verify
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
-          nexus_username: ${{ secrets.OSSRH_USERNAME }}
-          nexus_password: ${{ secrets.OSSRH_TOKEN }}
