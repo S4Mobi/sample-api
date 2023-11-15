@@ -37,12 +37,14 @@ jobs:
         run: mvn -B package --file pom.xml
 
       - name: Get project version
-        run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+        run: |
+          RELEASE_VERSION=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
+          echo "::set-output name=version::$RELEASE_VERSION"
         id: project-version
 
       # Remover após sucesso
       - name: Show version POM
-        run: echo "The version we just got from the pom is ${{ steps.project-version.outputs.version }}"
+        run: echo "The version we just got from the pom is ${{ env.RELEASE_VERSION }}"
 
       - name: Install cosign
         if: github.event_name != 'pull_request'
