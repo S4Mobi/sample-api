@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @Tag(name = "Sample")
 @RequestMapping("/samples")
@@ -27,7 +28,7 @@ public class SampleController extends BaseEndpoint {
     @Autowired
     private SampleService sampleService;
 
-    @CrossOrigin
+//    @CrossOrigin
 //    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get All Sample List.", responses = {
@@ -40,7 +41,7 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok(entities.stream().map(SampleResponse::fromEntity).collect(Collectors.toList()));
     }
 
-    @CrossOrigin
+//    @CrossOrigin
 //    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.GET, path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get One Sample by Id.", responses = {
@@ -53,7 +54,7 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok(SampleResponse.fromEntity(entity));
     }
 
-    @CrossOrigin
+//    @CrossOrigin
 //    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Post One Sample.", responses = {
@@ -66,7 +67,7 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.created(this.createUri(entity.getId())).build();
     }
 
-    @CrossOrigin
+//    @CrossOrigin
 //    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.PUT, path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Change all Sample by Id.", responses = {
@@ -79,7 +80,7 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok().build();
     }
 
-    @CrossOrigin
+//    @CrossOrigin
 //    @DeleteMapping(value = "/{id}")
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
     @Operation(description = "Remove on Sample by Id.", responses = {
