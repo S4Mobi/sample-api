@@ -1,4 +1,4 @@
-FROM ghcr.io/robixnai/sample-api
+FROM ghcr.io/robixnai/sample-api:latest
 
 EXPOSE ${SERVER_PORT}
 
