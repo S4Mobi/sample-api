@@ -27,8 +27,8 @@ public class SampleController extends BaseEndpoint {
     @Autowired
     private SampleService sampleService;
 
-//    @CrossOrigin
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get All Sample List.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -39,8 +39,8 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok(entities.stream().map(SampleResponse::fromEntity).collect(Collectors.toList()));
     }
 
-//    @CrossOrigin
-    @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get One Sample by Id.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -51,8 +51,8 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok(SampleResponse.fromEntity(entity));
     }
 
-//    @CrossOrigin
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Post One Sample.", responses = {
             @ApiResponse(responseCode = "201", description = "Created"),
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -63,8 +63,8 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.created(this.createUri(entity.getId())).build();
     }
 
-//    @CrossOrigin
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Change all Sample by Id.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -75,8 +75,8 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok().build();
     }
 
-//    @CrossOrigin
-    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    @DeleteMapping(value = "/{id}")
     @Operation(description = "Remove on Sample by Id.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
