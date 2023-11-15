@@ -9,10 +9,8 @@ on:
     types:
       - opened
     branches:
-      - 'releases/**'
-      - 'bugfix/**'
-      - 'hotfix/**'
-#    branches: [ "release", "bugfix", "hotfix" ]
+      - 'main'
+#    branches: [ "main", "develop" ]
 
 env:
   REGISTRY: ghcr.io
