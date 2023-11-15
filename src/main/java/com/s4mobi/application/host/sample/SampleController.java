@@ -28,7 +28,8 @@ public class SampleController extends BaseEndpoint {
     private SampleService sampleService;
 
     @CrossOrigin
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+//    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get All Sample List.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -40,7 +41,8 @@ public class SampleController extends BaseEndpoint {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get One Sample by Id.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -52,7 +54,8 @@ public class SampleController extends BaseEndpoint {
     }
 
     @CrossOrigin
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Post One Sample.", responses = {
             @ApiResponse(responseCode = "201", description = "Created"),
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -64,7 +67,8 @@ public class SampleController extends BaseEndpoint {
     }
 
     @CrossOrigin
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PUT, path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Change all Sample by Id.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -76,7 +80,8 @@ public class SampleController extends BaseEndpoint {
     }
 
     @CrossOrigin
-    @DeleteMapping(value = "/{id}")
+//    @DeleteMapping(value = "/{id}")
+    @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
     @Operation(description = "Remove on Sample by Id.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
