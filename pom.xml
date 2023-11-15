@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.s4mobi</groupId>
 	<artifactId>sample-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>sample-api</name>
 	<description>POC Backend Java</description>
 	<properties>
