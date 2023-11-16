@@ -27,7 +27,7 @@ jobs:
         run: "echo major: $MAJOR minor: $MINOR patch: $PATCH"
 
       - name: Create a New Version
-        run: echo "::set-env name=NEW_VERSION::$(echo ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }})"
+        run: echo "::set-env name=NEW_VERSION::$(echo ${{ format('{0}.{1}.{2}', env.MAJOR, env.MINOR, env.PATCH) }})"
 
       # Remover
       - name: Debug
