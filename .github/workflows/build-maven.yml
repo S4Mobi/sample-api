@@ -1,4 +1,4 @@
-name: Sample CI
+name: Build Maven
 
 on:
   pull_request:
@@ -10,6 +10,7 @@ on:
 jobs:
   build:
 
+    name: Building Maven
     runs-on: ubuntu-latest
 
     steps:
