@@ -6,6 +6,7 @@ jobs:
   get-release:
     name: Get the release branch version number
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Project
         uses: actions/checkout@v2
@@ -27,28 +28,5 @@ jobs:
       - name: Update Version in pom.xml
         run: mvn -B versions:set -DnewVersion=${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }} -DgenerateBackupPoms=false
 
-      - name: Release Maven package
-        uses: samuelmeuli/action-maven-publish@v1.4.0
-
-#on:
-#  push:
-#    branches:
-#      - "release/**"
-#
-#jobs:
-#  build:
-#
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout git repository
-#        uses: actions/checkout@v2
-#
-#      - name: Install Java and Maven
-#        uses: actions/setup-java@v1
-#        with:
-#          java-version: 11
-#
-#      - if: github.event.release
-#        name: Update version in pom.xml (Release only)
-#        run: mvn -B versions:set -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
+#      - name: Release Maven package
+#        uses: samuelmeuli/action-maven-publish@v1.4.0
