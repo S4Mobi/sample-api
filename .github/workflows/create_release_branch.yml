@@ -42,4 +42,4 @@ jobs:
       - name: Push new branch
 #        run: git push origin release/${{ github.event.inputs.versionName }}
         run: |
-          git remote set-url --push origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}/release/${{ github.event.inputs.versionName }}
+          git remote set-url --push origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
