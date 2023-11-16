@@ -1,9 +1,6 @@
 name: Update Project Version
 
-on:
-  push:
-    branches:
-      - "release/**"
+on: create
 
 jobs:
   get-release:
@@ -23,6 +20,11 @@ jobs:
           MANIFEST_SAFE_VERSION_STRING: ${{ steps.branchVersion.outputs.manifestSafeVersionString }}
         run: "echo major: $MAJOR minor: $MINOR patch: $PATCH manifestSafeVersionString: $MANIFEST_SAFE_VERSION_STRING"
 
+#on:
+#  push:
+#    branches:
+#      - "release/**"
+#
 #jobs:
 #  build:
 #
