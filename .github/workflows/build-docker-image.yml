@@ -65,9 +65,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-#          cache-from: type=gha
-#          cache-to: type=gha,mode=max
-#          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Sample API image
 
       - name: Sign the published Docker image
         env:
