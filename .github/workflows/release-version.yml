@@ -26,8 +26,15 @@ jobs:
           PATCH: ${{ steps.branchVersion.outputs.patch }}
         run: "echo major: $MAJOR minor: $MINOR patch: $PATCH"
 
+      - name: Create a New Version
+        run: echo "::set-env name=NEW_VERSION::$(echo ${MAJOR}.${MINOR}.${PATCH})"
+
+      # Remover
+      - name: Debug
+        run: "echo version: $NEW_VERSION"
+
       - name: Update Version in pom.xml
-        run: mvn -B versions:set -DnewVersion=${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }} -DgenerateBackupPoms=false
+        run: mvn -B versions:set -DnewVersion=${{ env.$NEW_VERSION }} -DgenerateBackupPoms=false
 
       - name: Initialize Mandatory git Config
         run: |
@@ -42,4 +49,4 @@ jobs:
           echo "::set-output name=commit::$(git rev-parse HEAD)"
 
       - name: Push new branch
-        run: git push origin origin release/${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}
+        run: git push origin origin release/${{ env.$NEW_VERSION }}
