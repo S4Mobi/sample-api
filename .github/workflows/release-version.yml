@@ -16,26 +16,30 @@ jobs:
         with:
           java-version: 11
 
-      - uses: valadas/get-release-branch-version@v1
-        id: branchVersion
+#      - uses: valadas/get-release-branch-version@v1
+#        id: branchVersion
+#
+#      - name: Dump the Version
+#        env:
+#          MAJOR: ${{ steps.branchVersion.outputs.major }}
+#          MINOR: ${{ steps.branchVersion.outputs.minor }}
+#          PATCH: ${{ steps.branchVersion.outputs.patch }}
+#        run: "echo major: $MAJOR minor $MINOR patch: $PATCH"
 
-      - name: Dump the Version
-        env:
-          MAJOR: ${{ steps.branchVersion.outputs.major }}
-          MINOR: ${{ steps.branchVersion.outputs.minor }}
-          PATCH: ${{ steps.branchVersion.outputs.patch }}
-          NEW_VERSION: ${{ format('{0}.{1}.{2}', env.MAJOR, env.MINOR, env.PATCH) }}
-        run: "echo major: $MAJOR minor $MINOR patch: $PATCH version: $NEW_VERSION"
+      - name: Get Branch Name
+        id: branch-name
+        uses: tj-actions/branch-names@v7
 
-      - name: Create a New Version
-        run: echo "::set-env name=NEW_VERSION::${{ format('{0}.{1}.{2}', env.MAJOR, env.MINOR, env.PATCH) }}"
-
-      # Remover
-      - name: Debug
-        run: "echo version: $NEW_VERSION"
+      - name: Get Version Name
+        uses: bhowell2/github-substring-action@1.0.2
+        id: version-name
+        with:
+          value: ${{ steps.branch-name.outputs.current_branch }}
+          index_of_str: "release/"
 
       - name: Update Version in pom.xml
-        run: mvn -B versions:set -DnewVersion=${{ env.NEW_VERSION }} -DgenerateBackupPoms=false
+#        run: mvn -B versions:set -DnewVersion=${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }} -DgenerateBackupPoms=false
+        run: mvn -B versions:set -DnewVersion=${{ steps.version-name.outputs.substring }} -DgenerateBackupPoms=false
 
       - name: Initialize Mandatory git Config
         run: |
@@ -50,4 +54,4 @@ jobs:
           echo "::set-output name=commit::$(git rev-parse HEAD)"
 
       - name: Push new branch
-        run: git push origin origin release/${{ env.NEW_VERSION }}
+        run: git push origin origin ${{ steps.branch-name.outputs.current_branch }}
