@@ -10,7 +10,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 #  TAG_LATEST: latest
-  TAG_LATEST: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest'
+#  TAG_LATEST: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest'
 #  TAG_LATEST: ${{ format('{0}/{1}:{2}', env.REGISTRY, env.IMAGE_NAME, 'latest') }}
 
 jobs:
@@ -37,6 +37,9 @@ jobs:
       - name: Maven package
         run: mvn -B package --file pom.xml
 
+      - name: Set env for tag latest
+        run: echo ::set-env name=IMAGE_NAME::${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
       - name: Install cosign
         uses: sigstore/cosign-installer@6e04d228eb30da1757ee4e1dd75a0ec73a653e06 #v3.1.1
         with:
@@ -57,6 +60,10 @@ jobs:
         uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934 # v5.0.0
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      # Remover
+      - name: Print image name
+        run: "echo Image name: ${{ steps.meta.outputs.image }}"
 
       - name: Build and push Docker image
         id: build-and-push
