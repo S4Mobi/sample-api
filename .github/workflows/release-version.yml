@@ -24,7 +24,7 @@ jobs:
           MAJOR: ${{ steps.branchVersion.outputs.major }}
           MINOR: ${{ steps.branchVersion.outputs.minor }}
           PATCH: ${{ steps.branchVersion.outputs.patch }}
-          NEW_VERSION: ${{ format('{0}.{1}.{2}', $MAJOR, $MINOR, $PATCH) }}
+          NEW_VERSION: ${{ format('{0}.{1}.{2}', '1', '0', '0') }}
         run: "echo major: $MAJOR; minor: $MINOR; patch: $PATCH; version: $NEW_VERSION"
 
 #      - name: Create a New Version
