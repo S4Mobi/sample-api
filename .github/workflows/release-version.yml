@@ -25,8 +25,8 @@ jobs:
           MINOR: ${{ steps.branchVersion.outputs.minor }}
           PATCH: ${{ steps.branchVersion.outputs.patch }}
 
-      - name: Update Version in pom.xml
-        run: mvn -B versions:set -DnewVersion=${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }} -DgenerateBackupPoms=false
+#      - name: Update Version in pom.xml
+#        run: mvn -B versions:set -DnewVersion=${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }} -DgenerateBackupPoms=false
 
 #      - name: Release Maven package
 #        uses: samuelmeuli/action-maven-publish@v1.4.0
