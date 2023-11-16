@@ -57,17 +57,19 @@ jobs:
         uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934 # v5.0.0
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=true
 
-      # Remover
-      - name: Print image name for meta
-        run: 'echo Image name: ${{ steps.meta.outputs.image }}'
-
-      - name: Set env latest tag
-        run: echo ::set-env name=TAG_LATEST::${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-
-      # Remover
-      - name: Print image name for env
-        run: 'echo Image name: ${{ env.TAG_LATEST }}'
+#      # Remover
+#      - name: Print image name for meta
+#        run: 'echo Image name: ${{ steps.meta.outputs.image }}'
+#
+#      - name: Set env latest tag
+#        run: echo ::set-env name=TAG_LATEST::${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+#
+#      # Remover
+#      - name: Print image name for env
+#        run: 'echo Image name: ${{ env.TAG_LATEST }}'
 
       - name: Build and push Docker image
         id: build-and-push
@@ -77,7 +79,7 @@ jobs:
           push: true
           tags: |
             ${{ steps.meta.outputs.tags }}
-            ${{ env.TAG_LATEST }}
+#            ${{ env.TAG_LATEST }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -87,6 +89,6 @@ jobs:
         env:
           TAGS: |
             ${{ steps.meta.outputs.tags }}
-            ${{ env.TAG_LATEST }}
+#            ${{ env.TAG_LATEST }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
