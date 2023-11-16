@@ -5,12 +5,7 @@ on: create
 jobs:
   get-release:
     name: Get the release branch version number
-
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
 
     steps:
       - name: Checkout Project
@@ -59,4 +54,4 @@ jobs:
           echo "::set-output name=commit::$(git rev-parse HEAD)"
 
       - name: Push new branch
-        run: git push origin ${{ steps.branch-name.outputs.current_branch }}
+        run: git push -u origin ${{ steps.branch-name.outputs.current_branch }}
