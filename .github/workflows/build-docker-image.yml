@@ -9,7 +9,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  TAG_LATEST: latest
+#  TAG_LATEST: latest
 #  TAG_LATEST: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest'
 #  TAG_LATEST: ${{ format('{0}/{1}:{2}', env.REGISTRY, env.IMAGE_NAME, 'latest') }}
 
@@ -59,8 +59,15 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       # Remover
-      - name: Print image name
+      - name: Print image name for meta
         run: 'echo Image name: ${{ steps.meta.outputs.image }}'
+
+      - name: Set env latest tag
+        run: echo ::set-env name=TAG_LATEST::${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+      # Remover
+      - name: Print image name for env
+        run: 'echo Image name: ${{ env.TAG_LATEST }}'
 
       - name: Build and push Docker image
         id: build-and-push
@@ -68,9 +75,9 @@ jobs:
         with:
           context: .
           push: true
-          tags:
-            - ${{ steps.meta.outputs.tags }}
-            - ${{ env.TAG_LATEST }}
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ env.TAG_LATEST }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -78,8 +85,8 @@ jobs:
 
       - name: Sign the published Docker image
         env:
-          TAGS:
-            - ${{ steps.meta.outputs.tags }}
-            - ${{ env.TAG_LATEST }}
+          TAGS: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ env.TAG_LATEST }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
