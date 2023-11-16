@@ -1,4 +1,4 @@
-FROM ghcr.io/robixnai/sample-api:latest
+FROM ghcr.io/s4mobi/sample-api:latest
 
 EXPOSE ${SERVER_PORT}
 
