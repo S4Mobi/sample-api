@@ -7,18 +7,16 @@ on:
         description: 'Name of version  (ie 5.5.0)'
         required: true
 
-permissions:
-  contents: read
-  pages: write
+permissions: write-all
 
 jobs:
   createrelease:
 
-    name: Create Release Branch
+    name: Creating Branch
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out code
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up JDK 11
@@ -47,5 +45,3 @@ jobs:
 
       - name: Push new branch
         run: git push origin release/${{ github.event.inputs.versionName }}
-#        run: |
-#          git remote set-url --push origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
