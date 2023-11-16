@@ -4,6 +4,12 @@ spring:
   profiles:
     active: default
 
+---
+spring:
+  security:
+    basic:
+      enabled: {SPRING_SECURITY_BASIC_ENABLED}
+
 server:
   port: 8080
   servlet:
