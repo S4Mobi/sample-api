@@ -24,7 +24,13 @@ jobs:
           MAJOR: ${{ steps.branchVersion.outputs.major }}
           MINOR: ${{ steps.branchVersion.outputs.minor }}
           PATCH: ${{ steps.branchVersion.outputs.patch }}
+          NEW_VERSION: ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}
         run: "echo major: $MAJOR minor: $MINOR patch: $PATCH"
 
       - name: Update Version in pom.xml
-        run: mvn -B versions:set -DnewVersion=${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }} -DgenerateBackupPoms=false
+        run: mvn -B versions:set -DnewVersion=${{ env.NEW_VERSION }} -DgenerateBackupPoms=false
+
+      - name: Commit & Push changes
+        uses: actions-js/push@release/${{ env.NEW_VERSION }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
