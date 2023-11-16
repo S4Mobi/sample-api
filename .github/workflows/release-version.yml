@@ -6,16 +6,28 @@ jobs:
   get-release:
     name: Get the release branch version number
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Project
+        uses: actions/checkout@v2
+
+      - name: Install Java and Maven
+        uses: actions/setup-java@v1
         with:
-          fetch-depth: 1
+          java-version: 11
+
       - uses: valadas/get-release-branch-version@v1
         id: branchVersion
-      - name: Dump the version info
+
+      - name: Dump the Version
         env:
           MAJOR: ${{ steps.branchVersion.outputs.major }}
           MINOR: ${{ steps.branchVersion.outputs.minor }}
           PATCH: ${{ steps.branchVersion.outputs.patch }}
-          MANIFEST_SAFE_VERSION_STRING: ${{ steps.branchVersion.outputs.manifestSafeVersionString }}
-#        run: "echo major: $MAJOR minor: $MINOR patch: $PATCH manifestSafeVersionString: $MANIFEST_SAFE_VERSION_STRING"
+        run: "echo major: $MAJOR minor: $MINOR patch: $PATCH"
+
+      - name: Update Version in pom.xml
+        run: mvn -B versions:set -DnewVersion=${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }} -DgenerateBackupPoms=false
+
+      - name: Release Maven package
+        uses: samuelmeuli/action-maven-publish@v1.4.0
