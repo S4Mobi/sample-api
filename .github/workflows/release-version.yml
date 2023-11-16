@@ -19,6 +19,13 @@ jobs:
           PATCH: ${{ steps.branchVersion.outputs.patch }}
           MANIFEST_SAFE_VERSION_STRING: ${{ steps.branchVersion.outputs.manifestSafeVersionString }}
         run: "echo major: $MAJOR minor: $MINOR patch: $PATCH manifestSafeVersionString: $MANIFEST_SAFE_VERSION_STRING"
+      - name: Bump Version
+        id: bump
+        uses: nnichols/maven-version-bump-action@v3
+        with:
+          github-token: ${{ secrets.github_token }}
+      - name: Print Version
+        run: "echo 'New Version: ${{steps.bump.outputs.version}}'"
 
 #on:
 #  push:
