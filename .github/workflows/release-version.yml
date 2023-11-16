@@ -25,7 +25,7 @@ jobs:
           MINOR: ${{ steps.branchVersion.outputs.minor }}
           PATCH: ${{ steps.branchVersion.outputs.patch }}
 #          NEW_VERSION: ${{ format('{0}.{1}.{2}', env.MAJOR, env.MINOR, env.PATCH) }}
-        run: "echo major: $MAJOR; minor: $MINOR; patch: $PATCH"
+        run: "echo major: $MAJOR minor $MINOR patch: $PATCH"
 
       - name: Create a New Version
         run: echo "::set-env name=NEW_VERSION::${{ format('{0}.{1}.{2}', env.MAJOR, env.MINOR, env.PATCH) }}"
