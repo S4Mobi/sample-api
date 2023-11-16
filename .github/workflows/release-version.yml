@@ -24,8 +24,8 @@ jobs:
           MAJOR: ${{ steps.branchVersion.outputs.major }}
           MINOR: ${{ steps.branchVersion.outputs.minor }}
           PATCH: ${{ steps.branchVersion.outputs.patch }}
-          NEW_VERSION: ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}
-        run: "echo major: $MAJOR minor: $MINOR patch: $PATCH"
+          NEW_VERSION: echo $MAJOR.$MINOR.$PATCH
+        run: "echo major: $MAJOR minor: $MINOR patch: $PATCH version: $NEW_VERSION"
 
       - name: Update Version in pom.xml
         run: mvn -B versions:set -DnewVersion=${{ env.NEW_VERSION }} -DgenerateBackupPoms=false
