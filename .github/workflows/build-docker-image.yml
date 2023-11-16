@@ -9,7 +9,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-#  TAG_LATEST: latest
+  TAG_LATEST: latest
 #  TAG_LATEST: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest'
 #  TAG_LATEST: ${{ format('{0}/{1}:{2}', env.REGISTRY, env.IMAGE_NAME, 'latest') }}
 
@@ -36,9 +36,6 @@ jobs:
 
       - name: Maven package
         run: mvn -B package --file pom.xml
-
-      - name: Set env for tag latest
-        run: echo ::set-env name=TAG_LATEST::${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Install cosign
         uses: sigstore/cosign-installer@6e04d228eb30da1757ee4e1dd75a0ec73a653e06 #v3.1.1
