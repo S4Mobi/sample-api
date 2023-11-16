@@ -40,4 +40,6 @@ jobs:
           git commit --message "Prepare release ${{ github.event.inputs.versionName }}"
 
       - name: Push new branch
-        run: git push origin release/${{ github.event.inputs.versionName }}
+#        run: git push origin release/${{ github.event.inputs.versionName }}
+        run: |
+          git remote set-url --push origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
