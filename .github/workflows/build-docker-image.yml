@@ -9,9 +9,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-#  TAG_LATEST: latest
-#  TAG_LATEST: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest'
-#  TAG_LATEST: ${{ format('{0}/{1}:{2}', env.REGISTRY, env.IMAGE_NAME, 'latest') }}
 
 jobs:
   build:
@@ -60,35 +57,20 @@ jobs:
           flavor: |
             latest=true
 
-#      # Remover
-#      - name: Print image name for meta
-#        run: 'echo Image name: ${{ steps.meta.outputs.image }}'
-#
-#      - name: Set env latest tag
-#        run: echo ::set-env name=TAG_LATEST::${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-#
-#      # Remover
-#      - name: Print image name for env
-#        run: 'echo Image name: ${{ env.TAG_LATEST }}'
-
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
           context: .
           push: true
-          tags: |
-            ${{ steps.meta.outputs.tags }}
-#            ${{ env.TAG_LATEST }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Sample API image
+#          cache-from: type=gha
+#          cache-to: type=gha,mode=max
+#          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Sample API image
 
       - name: Sign the published Docker image
         env:
-          TAGS: |
-            ${{ steps.meta.outputs.tags }}
-#            ${{ env.TAG_LATEST }}
+          TAGS: ${{ steps.meta.outputs.tags }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
