@@ -16,16 +16,6 @@ jobs:
         with:
           java-version: 11
 
-#      - uses: valadas/get-release-branch-version@v1
-#        id: branchVersion
-#
-#      - name: Dump the Version
-#        env:
-#          MAJOR: ${{ steps.branchVersion.outputs.major }}
-#          MINOR: ${{ steps.branchVersion.outputs.minor }}
-#          PATCH: ${{ steps.branchVersion.outputs.patch }}
-#        run: "echo major: $MAJOR minor $MINOR patch: $PATCH"
-
       - name: Get Branch Name
         id: branch-name
         uses: tj-actions/branch-names@v7
@@ -38,7 +28,6 @@ jobs:
           index_of_str: "release/"
 
       - name: Update Version in pom.xml
-#        run: mvn -B versions:set -DnewVersion=${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }} -DgenerateBackupPoms=false
         run: mvn -B versions:set -DnewVersion=${{ steps.version-name.outputs.substring }} -DgenerateBackupPoms=false
 
       - name: Initialize Mandatory git Config
@@ -54,4 +43,6 @@ jobs:
           echo "::set-output name=commit::$(git rev-parse HEAD)"
 
       - name: Push new branch
-        run: git push -u origin ${{ steps.branch-name.outputs.current_branch }}
+#        run: git push origin ${{ steps.branch-name.outputs.current_branch }}
+        run: |
+          git remote set-url --push origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
