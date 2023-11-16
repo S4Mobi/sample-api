@@ -5,7 +5,12 @@ on: create
 jobs:
   get-release:
     name: Get the release branch version number
+
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
 
     steps:
       - name: Checkout Project
