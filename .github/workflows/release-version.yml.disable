@@ -1,14 +1,10 @@
 name: Update Project Version
 
-#on: create
-on:
-  push:
-    branches:
-      - 'release/**'
+on: create
 
 jobs:
-  build:
-
+  get-release:
+    name: Get the release branch version number
     runs-on: ubuntu-latest
 
     steps:
@@ -47,8 +43,3 @@ jobs:
           git add pom.xml
           git commit --message "Update api Version"
           git remote set-url --push origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-
-#      - name: Push new branch
-#        run: git push origin ${{ steps.branch-name.outputs.current_branch }}
-#        run: |
-#          git remote set-url --push origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
