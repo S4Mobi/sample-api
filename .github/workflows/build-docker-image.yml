@@ -63,7 +63,7 @@ jobs:
 
       # Remover
       - name: Print image name
-        run: "echo Image name: ${{ steps.meta.outputs.image }}"
+        run: 'echo Image name: ${{ steps.meta.outputs.image }}'
 
       - name: Build and push Docker image
         id: build-and-push
