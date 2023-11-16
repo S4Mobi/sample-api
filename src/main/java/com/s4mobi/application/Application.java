@@ -32,7 +32,7 @@ public class Application {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable();
+//		http.cors().and().csrf().disable();
 		if (!securityBasicEnabled) {
 			http.httpBasic().disable();
 		}
