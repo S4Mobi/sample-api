@@ -2,22 +2,41 @@ name: Update Project Version
 
 on:
   push:
-    branches: [ "release/**" ]
+    branches:
+      - "release/**"
 
 jobs:
-  build:
-
+  get-release:
+    name: Get the release branch version number
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2
-
-      - name: Install Java and Maven
-        uses: actions/setup-java@v1
+      - uses: actions/checkout@v2
         with:
-          java-version: 11
+          fetch-depth: 1
+      - uses: valadas/get-release-branch-version@v1
+        id: branchVersion
+      - name: Dump the version info
+        env:
+          MAJOR: ${{ steps.branchVersion.outputs.major }}
+          MINOR: ${{ steps.branchVersion.outputs.minor }}
+          PATCH: ${{ steps.branchVersion.outputs.patch }}
+          MANIFEST_SAFE_VERSION_STRING: ${{ steps.branchVersion.outputs.manifestSafeVersionString }}
+        run: "echo major: $MAJOR minor: $MINOR patch: $PATCH manifestSafeVersionString: $MANIFEST_SAFE_VERSION_STRING"
 
-      - if: github.event.release
-        name: Update version in pom.xml (Release only)
-        run: mvn -B versions:set -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
+#jobs:
+#  build:
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout git repository
+#        uses: actions/checkout@v2
+#
+#      - name: Install Java and Maven
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 11
+#
+#      - if: github.event.release
+#        name: Update version in pom.xml (Release only)
+#        run: mvn -B versions:set -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
