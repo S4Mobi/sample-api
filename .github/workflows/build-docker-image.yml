@@ -69,17 +69,17 @@ jobs:
 #          cache-to: type=gha,mode=max
           outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Sample API image
 
-      - name: Get Latest Image
-        id: latest
-        uses: shrink/actions-docker-latest-image@v1
-        with:
-          repository: ${{ env.REGISTRY }}/${{ github.repository }}
-
       - name: Sign the published Docker image
         env:
           TAGS: ${{ steps.meta.outputs.tags }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+
+      - name: Get Latest Image
+        id: latest
+        uses: shrink/actions-docker-latest-image@v1
+        with:
+          repository: ${{ env.REGISTRY }}/${{ github.repository }}
 
 #  builddokerlatest:
 #
