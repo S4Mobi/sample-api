@@ -1,10 +1,14 @@
 name: Update Project Version
 
-on: create
+#on: create
+on:
+  push:
+    branches:
+      - 'release/**'
 
 jobs:
-  get-release:
-    name: Get the release branch version number
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
