@@ -24,15 +24,15 @@ jobs:
           MAJOR: ${{ steps.branchVersion.outputs.major }}
           MINOR: ${{ steps.branchVersion.outputs.minor }}
           PATCH: ${{ steps.branchVersion.outputs.patch }}
-          NEW_VERSION: ${{ format('{0}.{1}.{2}', '1', '0', '0') }}
-        run: "echo major: $MAJOR; minor: $MINOR; patch: $PATCH; version: $NEW_VERSION"
+#          NEW_VERSION: ${{ format('{0}.{1}.{2}', env.MAJOR, env.MINOR, env.PATCH) }}
+        run: "echo major: $MAJOR; minor: $MINOR; patch: $PATCH"
 
-#      - name: Create a New Version
-#        run: echo "::set-env name=NEW_VERSION::$(echo ${{ format('{0}.{1}.{2}', env.MAJOR, env.MINOR, env.PATCH) }})"
+      - name: Create a New Version
+        run: echo "::set-env name=NEW_VERSION::${{ format('{0}.{1}.{2}', env.MAJOR, env.MINOR, env.PATCH) }}"
 
       # Remover
-#      - name: Debug
-#        run: "echo version: $NEW_VERSION"
+      - name: Debug
+        run: "echo version: $NEW_VERSION"
 
       - name: Update Version in pom.xml
         run: mvn -B versions:set -DnewVersion=${{ env.NEW_VERSION }} -DgenerateBackupPoms=false
