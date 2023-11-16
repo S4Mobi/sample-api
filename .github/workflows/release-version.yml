@@ -31,6 +31,6 @@ jobs:
         run: mvn -B versions:set -DnewVersion=${{ env.NEW_VERSION }} -DgenerateBackupPoms=false
 
       - name: Commit & Push changes
-        uses: actions-js/push@release/${{ env.NEW_VERSION }}
+        uses: actions-js/push@release/1.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
