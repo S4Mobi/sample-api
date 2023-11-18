@@ -8,10 +8,11 @@ spring:
 spring:
   security:
     basic:
-      enabled: {SPRING_SECURITY_BASIC_ENABLED}
+      enabled: false
 
 server:
   port: 8080
+  forward-headers-strategy: framework
   servlet:
     context-path: '/v1/sample-api'
 
