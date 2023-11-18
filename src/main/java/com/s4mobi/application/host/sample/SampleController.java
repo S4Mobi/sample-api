@@ -27,7 +27,7 @@ public class SampleController extends BaseEndpoint {
     @Autowired
     private SampleService sampleService;
 
-    @CrossOrigin
+    @CrossOrigin(origins = "http://localhost:8080")
 //    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get All Sample List.", responses = {
@@ -40,7 +40,7 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok(entities.stream().map(SampleResponse::fromEntity).collect(Collectors.toList()));
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "http://localhost:8080")
 //    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.GET, path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get One Sample by Id.", responses = {
@@ -53,7 +53,7 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok(SampleResponse.fromEntity(entity));
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "http://localhost:8080")
 //    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Post One Sample.", responses = {
@@ -66,7 +66,7 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.created(this.createUri(entity.getId())).build();
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "http://localhost:8080")
 //    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.PUT, path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Change all Sample by Id.", responses = {
@@ -79,7 +79,7 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok().build();
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "http://localhost:8080")
 //    @DeleteMapping(value = "/{id}")
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
     @Operation(description = "Remove on Sample by Id.", responses = {
