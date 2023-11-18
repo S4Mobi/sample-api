@@ -11,6 +11,7 @@
 /Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/service/sample/impl/SampleServiceImpl.java
 /Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/infrastructure/network/dto/response/ParseResults.java
 /Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/service/sample/SampleService.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/infrastructure/configuration/CorsConfiguration.java
 /Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/infrastructure/configuration/FeignConfig.java
 /Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/entity/SampleEntity.java
 /Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/host/BaseEndpoint.java
