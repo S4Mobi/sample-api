@@ -2,13 +2,16 @@ spring:
   application:
     name: sample-api
   profiles:
-    active: default
+    active: local
 
 ---
 spring:
   security:
     basic:
       enabled: false
+    user:
+      name: sampple
+      password: sample@api
 
 server:
   port: 8080
