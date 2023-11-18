@@ -27,6 +27,6 @@ com/s4mobi/infrastructure/configuration/FeignConfig.class
 com/s4mobi/application/host/sample/dto/request/SampleRequest.class
 com/s4mobi/application/service/sample/impl/SampleServiceImpl.class
 com/s4mobi/application/host/sample/dto/response/ErrorResponse$ErrorResponseBuilderImpl.class
+com/s4mobi/infrastructure/configuration/CorsConfiguration.class
 com/s4mobi/infrastructure/network/SampleFeignClient.class
-com/s4mobi/infrastructure/configuration/WebConfig.class
 com/s4mobi/application/entity/SampleEntity$SampleEntityBuilderImpl.class
