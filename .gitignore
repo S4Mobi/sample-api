@@ -1,6 +1,6 @@
 HELP.md
-#Remover comentário após testes
-#target/
+Remover comentário após testes
+target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
