@@ -35,6 +35,7 @@ public class Application {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		if (!securityBasicEnabled) {
+			http.csrf().disable();
 			http.httpBasic().disable();
 		}
 		return http.build();
