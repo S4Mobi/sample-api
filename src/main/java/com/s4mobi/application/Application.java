@@ -1,5 +1,7 @@
 package com.s4mobi.application;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
@@ -14,13 +16,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @EnableWebSecurity
 @SpringBootApplication
 @EnableFeignClients("com.s4mobi")
 @ImportAutoConfiguration({FeignAutoConfiguration.class})
+@OpenAPIDefinition(servers = {@Server(url = "${server.servlet.context-path}", description = "Default Server URL")})
 public class Application {
 
 	@Value("${spring.security.basic.enabled}")
@@ -32,7 +34,6 @@ public class Application {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable();
 		if (!securityBasicEnabled) {
 			http.httpBasic().disable();
 		}

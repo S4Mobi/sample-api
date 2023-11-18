@@ -4,8 +4,15 @@ spring:
   profiles:
     active: docker
 
+---
+spring:
+  security:
+    basic:
+      enabled: {SPRING_SECURITY_BASIC_ENABLED}
+
 server:
   port: ${SERVER_PORT}
+  forward-headers-strategy: framework
   servlet:
     context-path: ${SERVER_SERVELT_CONTEXT_PATH}
 
