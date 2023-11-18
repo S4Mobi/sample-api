@@ -1,0 +1,17 @@
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/host/sample/dto/request/SampleRequest.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/host/sample/SampleController.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/infrastructure/network/dto/request/ParseSampleRequest.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/Application.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/service/BaseService.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/host/sample/dto/response/SampleResponse.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/infrastructure/network/SampleFeignClient.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/infrastructure/network/dto/response/ParseSampleResponse.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/host/sample/dto/response/ErrorResponse.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/exception/BusinessException.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/service/sample/impl/SampleServiceImpl.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/infrastructure/network/dto/response/ParseResults.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/service/sample/SampleService.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/infrastructure/configuration/FeignConfig.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/entity/SampleEntity.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/host/BaseEndpoint.java
+/Users/robsonmoreira/Workspaces/S4Mobi/Java/sample-api/src/main/java/com/s4mobi/application/exception/UnexpectedException.java

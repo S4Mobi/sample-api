@@ -22,13 +22,12 @@ import java.util.stream.Collectors;
 @RestController
 @Tag(name = "Sample")
 @RequestMapping("/samples")
+@CrossOrigin(origins = "http://localhost:8080")
 public class SampleController extends BaseEndpoint {
 
     @Autowired
     private SampleService sampleService;
 
-    @CrossOrigin
-//    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get All Sample List.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
@@ -40,8 +39,6 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok(entities.stream().map(SampleResponse::fromEntity).collect(Collectors.toList()));
     }
 
-    @CrossOrigin
-//    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.GET, path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get One Sample by Id.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
@@ -53,8 +50,6 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok(SampleResponse.fromEntity(entity));
     }
 
-    @CrossOrigin
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Post One Sample.", responses = {
             @ApiResponse(responseCode = "201", description = "Created"),
@@ -66,8 +61,6 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.created(this.createUri(entity.getId())).build();
     }
 
-    @CrossOrigin
-//    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.PUT, path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Change all Sample by Id.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
@@ -79,8 +72,6 @@ public class SampleController extends BaseEndpoint {
         return ResponseEntity.ok().build();
     }
 
-    @CrossOrigin
-//    @DeleteMapping(value = "/{id}")
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
     @Operation(description = "Remove on Sample by Id.", responses = {
             @ApiResponse(responseCode = "200", description = "Success"),
