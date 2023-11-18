@@ -9,6 +9,9 @@ spring:
   security:
     basic:
       enabled: {SPRING_SECURITY_BASIC_ENABLED}
+    user:
+      name: {SPRING_SECURITY_USER_NAME}
+      password: {SPRING_SECURITY_USER_PASSWORD}
 
 server:
   port: ${SERVER_PORT}
