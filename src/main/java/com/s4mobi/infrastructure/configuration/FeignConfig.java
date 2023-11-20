@@ -1,5 +1,6 @@
 package com.s4mobi.infrastructure.configuration;
 
+import feign.Logger;
 import feign.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -21,5 +22,10 @@ public class FeignConfig {
             requestTemplate.header("X-Parse-REST-API-Key", restiApiKey);
             requestTemplate.header("Content-Type", "application/json");
         };
+    }
+
+    @Bean
+    Logger.Level feignLoggerLevel() {
+        return Logger.Level.FULL;
     }
 }

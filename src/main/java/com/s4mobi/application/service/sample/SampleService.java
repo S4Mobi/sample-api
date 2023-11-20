@@ -2,11 +2,11 @@ package com.s4mobi.application.service.sample;
 
 import com.s4mobi.application.entity.SampleEntity;
 import com.s4mobi.application.service.BaseService;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface SampleService extends BaseService {
-    List<SampleEntity> getSamples();
+    Page<SampleEntity> getSamples(final Pageable pageable);
     SampleEntity getSample(final String id);
     SampleEntity createSample(final SampleEntity entity);
     void updateSample(final String id, final SampleEntity entity);
