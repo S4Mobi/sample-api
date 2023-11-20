@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface SampleService extends BaseService {
-    Page<SampleEntity> getSamples(final Pageable pageable);
+    Page<SampleEntity> getSamples(final String search, final Pageable pageable);
     SampleEntity getSample(final String id);
     SampleEntity createSample(final SampleEntity entity);
     void updateSample(final String id, final SampleEntity entity);
