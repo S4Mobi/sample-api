@@ -13,4 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 public class ParseResults<T> {
     private List<T> results;
+    private int count;
 }
