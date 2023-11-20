@@ -12,12 +12,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @Tag(name = "Sample")
@@ -34,9 +33,9 @@ public class SampleController extends BaseEndpoint {
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "Internal error", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    public ResponseEntity<List<SampleResponse>> getAllSample() {
-        final List<SampleEntity> entities = sampleService.getSamples();
-        return ResponseEntity.ok(entities.stream().map(SampleResponse::fromEntity).collect(Collectors.toList()));
+    public ResponseEntity<Page<SampleResponse>> getAllSample(final Pageable pageable) {
+        final Page<SampleEntity> entities = sampleService.getSamples(pageable);
+        return ResponseEntity.ok(entities.map(SampleResponse::fromEntity));
     }
 
     @CrossOrigin

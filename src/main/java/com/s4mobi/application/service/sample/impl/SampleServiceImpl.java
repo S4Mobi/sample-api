@@ -7,9 +7,14 @@ import com.s4mobi.application.service.sample.SampleService;
 import com.s4mobi.infrastructure.network.SampleFeignClient;
 import com.s4mobi.infrastructure.network.dto.response.ParseResults;
 import com.s4mobi.infrastructure.network.dto.response.ParseSampleResponse;
+import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,12 +29,27 @@ public class SampleServiceImpl implements SampleService {
     private SampleFeignClient sampleFeignClient;
 
     @Override
-    public List<SampleEntity> getSamples() {
+    public Page<SampleEntity> getSamples(final Pageable pageable) {
         try {
+            final int page = pageable.getPageNumber();
+            final int limit = pageable.getPageSize();
+            final int skip = limit * page;
+
+            String orders = Strings.EMPTY;
+            for (Sort.Order order : pageable.getSort().toList()) {
+                if (orders.equals(Strings.EMPTY)) {
+                    orders = order.getProperty();
+                } else {
+                    orders = String.join(",", orders, order.getProperty());
+                }
+            }
+
             LOGGER.info("[GET] Calling Parse to get all Samples - /Sample");
-            final ParseResults<ParseSampleResponse> samples = sampleFeignClient.getSamples();
+            final ParseResults<ParseSampleResponse> samples = sampleFeignClient.getSamples(limit, skip, orders);
             LOGGER.info("[GET] Parse returned the object: {} - /Sample", this.getJsonResponse(samples));
-            return samples.getResults().stream().map(SampleEntity::fromResponse).collect(Collectors.toList());
+
+            final List<SampleEntity> entities = samples.getResults().stream().map(SampleEntity::fromResponse).collect(Collectors.toList());
+            return new PageImpl<>(entities, pageable, samples.getCount());
         } catch (Exception e) {
             LOGGER.error("Error at get all Samples in Parse: {}", e.getMessage());
             throw new BusinessException(e.getMessage());
