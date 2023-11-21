@@ -4,20 +4,21 @@ import com.s4mobi.application.entity.SampleEntity;
 import com.s4mobi.application.exception.BusinessException;
 import com.s4mobi.application.host.BaseEndpoint;
 import com.s4mobi.application.service.sample.SampleService;
+import com.s4mobi.infrastructure.model.ParsePageable;
 import com.s4mobi.infrastructure.network.SampleFeignClient;
 import com.s4mobi.infrastructure.network.dto.response.ParseResults;
 import com.s4mobi.infrastructure.network.dto.response.ParseSampleResponse;
-import org.apache.logging.log4j.util.Strings;
+import com.s4mobi.infrastructure.utils.ParseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,23 +30,16 @@ public class SampleServiceImpl implements SampleService {
     private SampleFeignClient sampleFeignClient;
 
     @Override
-    public Page<SampleEntity> getSamples(final Pageable pageable) {
+    public Page<SampleEntity> getSamples(final String search, final Pageable pageable) {
         try {
-            final int page = pageable.getPageNumber();
-            final int limit = pageable.getPageSize();
-            final int skip = limit * page;
-
-            String orders = Strings.EMPTY;
-            for (Sort.Order order : pageable.getSort().toList()) {
-                if (orders.equals(Strings.EMPTY)) {
-                    orders = order.getProperty();
-                } else {
-                    orders = String.join(",", orders, order.getProperty());
-                }
+            String where = search;
+            if (search != null) {
+                where = ParseUtils.parseSearch(search, SampleEntity.class);
             }
+            final ParsePageable pagination = ParseUtils.parsePageable(pageable);
 
             LOGGER.info("[GET] Calling Parse to get all Samples - /Sample");
-            final ParseResults<ParseSampleResponse> samples = sampleFeignClient.getSamples(limit, skip, orders);
+            final ParseResults<ParseSampleResponse> samples = sampleFeignClient.getSamples(where, pagination.limit, pagination.skip, pagination.orders);
             LOGGER.info("[GET] Parse returned the object: {} - /Sample", this.getJsonResponse(samples));
 
             final List<SampleEntity> entities = samples.getResults().stream().map(SampleEntity::fromResponse).collect(Collectors.toList());

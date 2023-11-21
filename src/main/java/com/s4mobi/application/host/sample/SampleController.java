@@ -33,8 +33,9 @@ public class SampleController extends BaseEndpoint {
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "Internal error", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    public ResponseEntity<Page<SampleResponse>> getAllSample(final Pageable pageable) {
-        final Page<SampleEntity> entities = sampleService.getSamples(pageable);
+    public ResponseEntity<Page<SampleResponse>> getAllSample(
+            @RequestParam(required = false) final String search, final Pageable pageable) {
+        final Page<SampleEntity> entities = sampleService.getSamples(search, pageable);
         return ResponseEntity.ok(entities.map(SampleResponse::fromEntity));
     }
 

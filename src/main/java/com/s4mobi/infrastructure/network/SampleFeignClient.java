@@ -11,7 +11,12 @@ import org.springframework.web.bind.annotation.*;
 public interface  SampleFeignClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/Sample?count=1")
-    ParseResults<ParseSampleResponse> getSamples(@RequestParam final int limit, @RequestParam final int skip, @RequestParam final String order);
+    ParseResults<ParseSampleResponse> getSamples(
+            @RequestParam String where,
+            @RequestParam final int limit,
+            @RequestParam final int skip,
+            @RequestParam final String order
+    );
 
     @RequestMapping(method = RequestMethod.GET, value = "/Sample/{id}")
     ParseSampleResponse getSample(@PathVariable final String id);
